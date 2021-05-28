@@ -94,7 +94,8 @@ class _LoginRegPageState extends State<LoginRegPage> {
       Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         child: TextFormField(
           decoration: InputDecoration(
-            hintText: "Enter Email Address"  
+            hintText: "Enter Email Address",
+            prefixIcon: Icon(Icons.email) 
           ),
           validator: (value){
             return value.isEmpty? 'Email is required': null;
@@ -108,7 +109,8 @@ class _LoginRegPageState extends State<LoginRegPage> {
       Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         child: TextFormField(
           decoration: InputDecoration(
-              hintText: "Enter Password"  
+              hintText: "Enter Password",
+              prefixIcon: Icon(Icons.lock_outline)  
           ),
           obscureText: true,
           validator: (value){

@@ -11,7 +11,7 @@ class _HomePageState extends State<HomePage> {
 
   int currentindex=0;
   List tabs=[
-    logoutUser(),
+   // logoutUser(),
   ];
 
   void logoutUser(){

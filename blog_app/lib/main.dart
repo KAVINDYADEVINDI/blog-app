@@ -1,7 +1,6 @@
 import 'package:blog_app/homePage.dart';
-// import 'package:blog_app/loginregpage.dart';
+//import 'package:blog_app/loginregpage.dart';
 import 'package:flutter/material.dart';
-
 
 void main() {
   runApp(MyApp());
