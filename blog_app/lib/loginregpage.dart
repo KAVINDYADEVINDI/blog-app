@@ -4,17 +4,41 @@ class LoginRegPage extends StatefulWidget {
   @override
   _LoginRegPageState createState() => _LoginRegPageState();
 }
-
-
+enum FormType {
+    login,
+    register
+}
 
 class _LoginRegPageState extends State<LoginRegPage> {
 
+  
+  final formKey= GlobalKey<FormState>();
+  FormType _formType=FormType.login;
+  String _email="";
+  String _password="";
+  
   void validateAndSave(){
-    
+
   }
-  void moveToReg(){
-    
+
+ void moveToReg() {
+  formKey.currentState.reset();//value in the form is reset
+
+    setState(() {
+          _formType=FormType.register;
+    });
+}
+
+  void moveToLogin(){
+    formKey.currentState.reset();//value in the form is reset
+
+    setState(() {
+          _formType=FormType.login;
+    });
   }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,6 +62,7 @@ class _LoginRegPageState extends State<LoginRegPage> {
       body: Container(
         margin: EdgeInsets.all(15.0),
         child: Form(
+          key: formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: 
@@ -56,10 +81,16 @@ class _LoginRegPageState extends State<LoginRegPage> {
       SizedBox(height: 20.0,),
 
       Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        child: TextField(
+        child: TextFormField(
           decoration: InputDecoration(
             hintText: "Enter Email Address"  
           ),
+          validator: (value){
+            return value.isEmpty? 'Email is required': null;
+          },
+          onSaved: (value){
+            return _email=value;
+          },
         ),
       ),
       SizedBox(height: 10.0,),
@@ -88,24 +119,44 @@ class _LoginRegPageState extends State<LoginRegPage> {
     );
   }
 
-}
-
 List<Widget>createButtons(){
-    return[
-      Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        child:ElevatedButton(
-          onPressed: ()=>validateAndSave(),
-          child:Text('Login',style: TextStyle(fontSize: 16.0),),
-      
+    if(_formType== FormType.login){
+        return [
+        Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+          child:ElevatedButton(
+            onPressed: validateAndSave,
+            child:Text('Login',style: TextStyle(fontSize: 16.0),),
+        
+          ),
         ),
-      ),
-      
+        
 
-      FlatButton(
-        onPressed: ()=>moveToReg(),
-        child:Text('Not have an account? Create Account',
-          style: TextStyle(fontSize: 16.0),),textColor: Colors.blueAccent,
-      ),
-    ];
+        FlatButton(
+          onPressed: moveToReg,
+          child:Text('Not have an account? Create Account',
+            style: TextStyle(fontSize: 16.0),),textColor: Colors.blueAccent,
+        ),
+      ];
+    }
+    else{
+      return [
+        Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+          child:ElevatedButton(
+            onPressed: validateAndSave,
+            child:Text('Create Account',style: TextStyle(fontSize: 16.0),),
+        
+          ),
+        ),
+        
+
+        FlatButton(
+          onPressed: moveToLogin,
+          child:Text('Already have an account? Login',
+            style: TextStyle(fontSize: 16.0),),textColor: Colors.blueAccent,
+        ),
+      ];
+
+    }
 
   }
+}
