@@ -1,5 +1,7 @@
-import 'package:blog_app/loginregpage.dart';
+import 'package:blog_app/homePage.dart';
+// import 'package:blog_app/loginregpage.dart';
 import 'package:flutter/material.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -17,7 +19,7 @@ class MyApp extends StatelessWidget {
 
       debugShowCheckedModeBanner:false ,//delete banner in appbar
       
-      home:LoginRegPage(),
+      home:HomePage(),
       
     );
   }
