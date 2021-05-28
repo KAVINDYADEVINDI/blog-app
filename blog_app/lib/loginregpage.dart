@@ -17,8 +17,15 @@ class _LoginRegPageState extends State<LoginRegPage> {
   String _email="";
   String _password="";
   
-  void validateAndSave(){
-
+ bool validateAndSave(){
+    final form =formKey.currentState;
+    if(form.validate()){
+      form.save();
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 
  void moveToReg() {
@@ -59,18 +66,22 @@ class _LoginRegPageState extends State<LoginRegPage> {
         ),
       ),
 
-      body: Container(
-        margin: EdgeInsets.all(15.0),
-        child: Form(
-          key: formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: 
-              createInputs() + createButtons(),
+      body: ListView(
+        children: <Widget>[Container(
+          margin: EdgeInsets.all(15.0),
+          child: Form(
+            key: formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: 
+                createInputs() + createButtons(),
 
+            ),
           ),
         ),
+        ]
       ),
+    
     );
   }
 
@@ -95,10 +106,17 @@ class _LoginRegPageState extends State<LoginRegPage> {
       ),
       SizedBox(height: 10.0,),
       Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        child: TextField(
+        child: TextFormField(
           decoration: InputDecoration(
               hintText: "Enter Password"  
           ),
+          obscureText: true,
+          validator: (value){
+            return value.isEmpty? 'Password is required': null;
+          },
+          onSaved: (value){
+            return _password=value;
+          },
         ),
       ),
     ];
