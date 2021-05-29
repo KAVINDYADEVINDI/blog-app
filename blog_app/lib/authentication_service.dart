@@ -35,7 +35,7 @@ class AuthenticationService {
       return "Signed up";
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
-        return "The account already exists for that email.";
+        return "already exist";
       } else {
         return "Something Went Wrong.";
       }

@@ -155,7 +155,8 @@ class _SignUpState extends State<SignUp> {
                       
                       if(logMessage == "Signed up"){
                         showAlert();
-                      }else if(logMessage == "The account already exists for that email."){
+                      }
+                      if(logMessage == "already exist"){
                         errorAlert();
                       }
   
