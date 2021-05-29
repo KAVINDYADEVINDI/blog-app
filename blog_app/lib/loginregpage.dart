@@ -1,51 +1,25 @@
+
+import 'package:blog_app/authentication_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:email_validator/email_validator.dart';
 
-class LoginRegPage extends StatefulWidget {
-  @override
-  _LoginRegPageState createState() => _LoginRegPageState();
-}
-enum FormType {
-    login,
-    register
-}
+class LoginRegPage extends StatelessWidget {
 
-class _LoginRegPageState extends State<LoginRegPage> {
-
-  
   final formKey= GlobalKey<FormState>();
-  FormType _formType=FormType.login;
-  String _email="";
-  String _password="";
   
- bool validateAndSave(){
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  bool validate(){
     final form =formKey.currentState;
     if(form.validate()){
-      form.save();
       return true;
     }
     else{
       return false;
     }
   }
-
- void moveToReg() {
-  formKey.currentState.reset();//value in the form is reset
-
-    setState(() {
-          _formType=FormType.register;
-    });
-}
-
-  void moveToLogin(){
-    formKey.currentState.reset();//value in the form is reset
-
-    setState(() {
-          _formType=FormType.login;
-    });
-  }
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,67 +41,88 @@ class _LoginRegPageState extends State<LoginRegPage> {
       ),
 
       body: ListView(
-        children: <Widget>[Container(
-          margin: EdgeInsets.all(15.0),
+        children: <Widget>[ Container(
           child: Form(
             key: formKey,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: 
-                createInputs() + createButtons(),
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(height: 10.0,),
+                logo(),
+                SizedBox(height: 20.0,),
+                Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                  child:TextFormField(
+                    controller: emailController,
+                    decoration: InputDecoration(
+                      hintText: "Enter Email Address",
+                      prefixIcon: Icon(Icons.email) 
+                    ),
+                    validator: (value){
+                     if(value.isEmpty) {
+                        return 'Email is required';
+                      }
+                      else if(EmailValidator.validate(value)){
+                        return null;
+                      }
+                      else{
+                        return "Please enter a valid email";
+                      }
+                    },
+                  ),
+                ),
+                
+                SizedBox(height: 10.0,),
+                Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                  child:TextFormField(
+                    controller: passwordController,
+                    decoration: InputDecoration(
+                      hintText: "Enter Password",
+                      prefixIcon: Icon(Icons.lock_outline)  
+                    ),
+                    obscureText: true,
+                    validator: (value){
+                      if(value.isEmpty) {
+                        return 'Password is required';
+                      }
+                      else{
+                        return null;
+                      }
+                      
+                    },
+                  ),
+                ),
 
+                SizedBox(height: 10.0,),
+                Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                  child:ElevatedButton(
+                    onPressed: () {
+                      validate();
+                      context.read<AuthenticationService>().signIn(
+                        email: emailController.text.trim(),
+                        password: passwordController.text.trim(),
+                      );
+                    },
+                    child:Text('Login',style: TextStyle(fontSize: 16.0),),
+                  ),
+                ),
+
+                FlatButton(
+                  onPressed:()=>{},
+                  child:Text('Not have an account? Create Account',
+                  style: TextStyle(fontSize: 16.0),),textColor: Colors.blueAccent,
+                ),
+              ],
             ),
           ),
         ),
-        ]
-      ),
-    
-    );
-  }
-
-  List<Widget>createInputs(){
-    return[
-      SizedBox(height: 10.0,),
-      logo(),
-      SizedBox(height: 20.0,),
-
-      Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        child: TextFormField(
-          decoration: InputDecoration(
-            hintText: "Enter Email Address",
-            prefixIcon: Icon(Icons.email) 
-          ),
-          validator: (value){
-            return value.isEmpty? 'Email is required': null;
-          },
-          onSaved: (value){
-            return _email=value;
-          },
-        ),
-      ),
-      SizedBox(height: 10.0,),
-      Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        child: TextFormField(
-          decoration: InputDecoration(
-              hintText: "Enter Password",
-              prefixIcon: Icon(Icons.lock_outline)  
-          ),
-          obscureText: true,
-          validator: (value){
-            return value.isEmpty? 'Password is required': null;
-          },
-          onSaved: (value){
-            return _password=value;
-          },
-        ),
-      ),
-    ];
-
+      ],
+    ),
+  );
   }
 
   Widget logo(){
     return Container(
-      width: 200,
+      width: 300,
       height: 200,
       decoration: BoxDecoration(
       shape: BoxShape.circle,
@@ -137,46 +132,5 @@ class _LoginRegPageState extends State<LoginRegPage> {
         ),
       ),
     );
-  }
-
-List<Widget>createButtons(){
-    if(_formType== FormType.login){
-        return [
-        Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-          child:ElevatedButton(
-            onPressed: validateAndSave,
-            child:Text('Login',style: TextStyle(fontSize: 16.0),),
-        
-          ),
-        ),
-        
-
-        FlatButton(
-          onPressed: moveToReg,
-          child:Text('Not have an account? Create Account',
-            style: TextStyle(fontSize: 16.0),),textColor: Colors.blueAccent,
-        ),
-      ];
-    }
-    else{
-      return [
-        Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-          child:ElevatedButton(
-            onPressed: validateAndSave,
-            child:Text('Create Account',style: TextStyle(fontSize: 16.0),),
-        
-          ),
-        ),
-        
-
-        FlatButton(
-          onPressed: moveToLogin,
-          child:Text('Already have an account? Login',
-            style: TextStyle(fontSize: 16.0),),textColor: Colors.blueAccent,
-        ),
-      ];
-
-    }
-
   }
 }
