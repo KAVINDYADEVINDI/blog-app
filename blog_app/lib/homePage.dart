@@ -3,8 +3,6 @@ import 'package:blog_app/authentication_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'loginregpage.dart';
-
 
 class HomePage extends StatefulWidget {
   @override
@@ -13,11 +11,20 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  int currentindex=0;
-  List tabs=[
-    HomePage(),
-    
+  int _selectedIndex = 0;
+
+  static const List<Widget> _widgetOptions = <Widget>[  
+    Text('Home Page', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),  
+    Text('Search Page', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),  
+    Text('Profile Page', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),  
   ];
+
+  void _onItemTapped(int index) {  
+    setState(() {  
+      _selectedIndex = index;  
+    });  
+  }  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +38,7 @@ class _HomePageState extends State<HomePage> {
               context.read<AuthenticationService>().signOut();
             },
               //child: Text("Sign out"),
-        ),
+          ),
         ],
         elevation: 13.0, //shadow of the bottom
           // backgroundColor: Colors.blueAccent[1000],
@@ -46,34 +53,34 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
 
-      body:tabs[currentindex],
+      body:Center(  
+        child: _widgetOptions.elementAt(_selectedIndex),  
+      ),  
        bottomNavigationBar: BottomNavigationBar(
-         currentIndex: currentindex,
-          items: [
+         
+          items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               label: "Home",
               icon: Icon(Icons.home,),
               
             ),
-            // BottomNavigationBarItem(
-            //   label: "Add Blog",
-            //   icon: Icon(Icons.cloud_upload,),  
-            // ),
-            //  BottomNavigationBarItem(
-            //   label: "Settings",
-            //   icon: Icon(Icons.settings,),  
-            // ),
+            BottomNavigationBarItem(
+              label: "Add Blog",
+              icon: Icon(Icons.cloud_upload,),  
+            ),
+             BottomNavigationBarItem(
+              label: "Settings",
+              icon: Icon(Icons.settings,),  
+            ),
           ],
-          onTap:(index){
-            setState(() {
-              currentindex=index;          
-            });
-            
-          } ,
+          //type: BottomNavigationBarType.shifting,  
+          currentIndex: _selectedIndex, 
+          onTap: _onItemTapped, 
 
           backgroundColor: Colors.blue[100],
           fixedColor: Colors.blue[900],
           elevation: 13.0,
+          unselectedItemColor: Colors.black87,
           selectedLabelStyle: TextStyle(fontSize: 17.0),
           unselectedLabelStyle: TextStyle(color:Colors.black87,fontSize: 14.0),
           selectedIconTheme: IconThemeData (
@@ -83,7 +90,7 @@ class _HomePageState extends State<HomePage> {
           ),
           unselectedIconTheme: IconThemeData (
               color: Colors.black87,
-              opacity: 0.5,
+              opacity: 1.0,
               size: 25
           ),
           
