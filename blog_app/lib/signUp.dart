@@ -15,6 +15,7 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   final formKey= GlobalKey<FormState>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final TextEditingController emailController = TextEditingController();
 
@@ -56,7 +57,14 @@ class _SignUpState extends State<SignUp> {
         ).show();
     }
 
+   errorAlert(){
+      Alert(
+        context:context,
+        title: 'Email address is already exists',
+        ).show();
+    }
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         centerTitle: true,
         title:Text('Blog App',style:TextStyle(fontSize: 20.0)),
@@ -140,12 +148,15 @@ class _SignUpState extends State<SignUp> {
                   child:ElevatedButton(
                     onPressed: () {
                       validate();
-                      context.read<AuthenticationService>().signUp(
+                      final logMessage=context.read<AuthenticationService>().signUp(
                         email: emailController.text.trim(),
                         password: passwordController.text.trim(),
                       );
-                      if(validate()){
+                      
+                      if(logMessage == "Signed up"){
                         showAlert();
+                      }else if(logMessage == "The account already exists for that email."){
+                        errorAlert();
                       }
   
                     },
