@@ -3,6 +3,8 @@ import 'package:blog_app/authentication_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'loginregpage.dart';
+
 
 class HomePage extends StatefulWidget {
   @override
@@ -53,14 +55,14 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(Icons.home,),
               
             ),
-            BottomNavigationBarItem(
-              label: "Add Blog",
-              icon: Icon(Icons.cloud_upload,),  
-            ),
-             BottomNavigationBarItem(
-              label: "Settings",
-              icon: Icon(Icons.settings,),  
-            ),
+            // BottomNavigationBarItem(
+            //   label: "Add Blog",
+            //   icon: Icon(Icons.cloud_upload,),  
+            // ),
+            //  BottomNavigationBarItem(
+            //   label: "Settings",
+            //   icon: Icon(Icons.settings,),  
+            // ),
           ],
           onTap:(index){
             setState(() {
