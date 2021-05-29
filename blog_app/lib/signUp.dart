@@ -1,16 +1,21 @@
 
 import 'package:blog_app/authentication_service.dart';
+import 'package:blog_app/homePage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:blog_app/signUp.dart';
+import 'package:blog_app/loginregpage.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
-class LoginRegPage extends StatelessWidget {
+class SignUp extends StatelessWidget {
 
   final formKey= GlobalKey<FormState>();
   
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  String _email="";
+  String _password="";
 
   bool validate(){
     final form =formKey.currentState;
@@ -23,6 +28,27 @@ class LoginRegPage extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
+
+//alert
+    showAlert(){
+      Alert(
+        context:context,
+        title: ' Welcome to the Blog App',
+        buttons: [
+          DialogButton(
+            child: Text('Ok'),
+            onPressed: ()=>{
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_){
+                    return HomePage();
+                  }
+                ))
+            },
+          )
+        ]
+        ).show();
+    }
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -69,6 +95,9 @@ class LoginRegPage extends StatelessWidget {
                         return "Please enter a valid email";
                       }
                     },
+                    onSaved: (value){
+                      return _email=value;
+                    },
                   ),
                 ),
                 
@@ -85,10 +114,16 @@ class LoginRegPage extends StatelessWidget {
                       if(value.isEmpty) {
                         return 'Password is required';
                       }
-                      else{
+                      else if(value.length<6) {
+                        return "Enter a password 6+ characters";
+                      }
+                      else {
                         return null;
                       }
                       
+                    },
+                    onSaved: (value){
+                      return _password=value;
                     },
                   ),
                 ),
@@ -98,12 +133,13 @@ class LoginRegPage extends StatelessWidget {
                   child:ElevatedButton(
                     onPressed: () {
                       validate();
-                      context.read<AuthenticationService>().signIn(
+                      showAlert();
+                      context.read<AuthenticationService>().signUp(
                         email: emailController.text.trim(),
                         password: passwordController.text.trim(),
                       );
                     },
-                    child:Text('Login',style: TextStyle(fontSize: 16.0),),
+                    child:Text('Create Account',style: TextStyle(fontSize: 16.0),),
                   ),
                 ),
 
@@ -111,11 +147,11 @@ class LoginRegPage extends StatelessWidget {
                   onPressed:()=>{
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (_){
-                        return SignUp();
+                        return LoginRegPage();
                       }
                       ))
-                  },
-                  child:Text('Not have an account? Create Account',
+                    },
+                  child:Text('Already have an account? LogIn',
                   style: TextStyle(fontSize: 16.0),),
                 ),
               ],
