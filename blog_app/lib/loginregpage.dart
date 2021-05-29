@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:blog_app/signUp.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 
 class LoginRegPage extends StatelessWidget {
 

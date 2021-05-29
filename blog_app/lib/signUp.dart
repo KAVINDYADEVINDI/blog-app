@@ -57,6 +57,7 @@ class _SignUpState extends State<SignUp> {
         ]
         ).show();
     }
+    
 
    
     return Scaffold(
@@ -153,15 +154,14 @@ class _SignUpState extends State<SignUp> {
                   child:ElevatedButton(
                     onPressed: () {
                       validate();
-                      context.read<AuthenticationService>().signUp(
+                        context.read<AuthenticationService>().signUp(
                         email: emailController.text.trim(),
                         password: passwordController.text.trim(),
                       );
                       if(validate()){
                         showAlert();
-                      }
+                      }                
                      
-  
                     },
                     child:Text('Create Account',style: TextStyle(fontSize: 16.0),),
                   ),
