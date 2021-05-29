@@ -36,10 +36,10 @@ class AuthenticationService {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
         return "already exist";
-      } else {
-        return "Something Went Wrong.";
       }
-    } 
+    }  catch (e) {
+      print(e);
+    }
   }
 
 }

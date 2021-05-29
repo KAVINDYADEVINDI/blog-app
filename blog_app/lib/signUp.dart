@@ -24,6 +24,7 @@ class _SignUpState extends State<SignUp> {
   String _email="";
 
   String _password="";
+   bool _obscureText = true;
 
   bool validate(){
     final form =formKey.currentState;
@@ -57,12 +58,7 @@ class _SignUpState extends State<SignUp> {
         ).show();
     }
 
-   errorAlert(){
-      Alert(
-        context:context,
-        title: 'Email address is already exists',
-        ).show();
-    }
+   
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -120,11 +116,20 @@ class _SignUpState extends State<SignUp> {
                 Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                   child:TextFormField(
                     controller: passwordController,
+                    obscureText: _obscureText,
                     decoration: InputDecoration(
                       hintText: "Enter Password",
-                      prefixIcon: Icon(Icons.lock_outline)  
+                      prefixIcon: Icon(Icons.lock_outline),
+                      suffixIcon: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _obscureText = !_obscureText;
+                          });
+                        },
+                        child:
+                          Icon(_obscureText ? Icons.visibility_off : Icons.visibility),
+                      ),
                     ),
-                    obscureText: true,
                     validator: (value){
                       if(value.isEmpty) {
                         return 'Password is required';
@@ -148,17 +153,14 @@ class _SignUpState extends State<SignUp> {
                   child:ElevatedButton(
                     onPressed: () {
                       validate();
-                      final logMessage=context.read<AuthenticationService>().signUp(
+                      context.read<AuthenticationService>().signUp(
                         email: emailController.text.trim(),
                         password: passwordController.text.trim(),
                       );
-                      
-                      if(logMessage == "Signed up"){
+                      if(validate()){
                         showAlert();
                       }
-                      if(logMessage == "already exist"){
-                        errorAlert();
-                      }
+                     
   
                     },
                     child:Text('Create Account',style: TextStyle(fontSize: 16.0),),
@@ -184,7 +186,7 @@ class _SignUpState extends State<SignUp> {
     ),
   );
   }
-
+   
   Widget logo(){
     return Container(
       width: 300,

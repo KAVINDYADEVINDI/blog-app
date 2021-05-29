@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:blog_app/signUp.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class LoginRegPage extends StatelessWidget {
 
@@ -102,6 +103,8 @@ class LoginRegPage extends StatelessWidget {
                         email: emailController.text.trim(),
                         password: passwordController.text.trim(),
                       );
+                      
+                      
                     },
                     child:Text('Login',style: TextStyle(fontSize: 16.0),),
                   ),
