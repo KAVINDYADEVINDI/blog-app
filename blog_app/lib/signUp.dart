@@ -7,14 +7,21 @@ import 'package:blog_app/loginregpage.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
 
+  @override
+  _SignUpState createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
   final formKey= GlobalKey<FormState>();
-  
+
   final TextEditingController emailController = TextEditingController();
+
   final TextEditingController passwordController = TextEditingController();
 
   String _email="";
+
   String _password="";
 
   bool validate(){
@@ -26,10 +33,10 @@ class SignUp extends StatelessWidget {
       return false;
     }
   }
+
   @override
   Widget build(BuildContext context) {
-
-//alert
+ //alert
     showAlert(){
       Alert(
         context:context,
@@ -133,11 +140,14 @@ class SignUp extends StatelessWidget {
                   child:ElevatedButton(
                     onPressed: () {
                       validate();
-                      showAlert();
                       context.read<AuthenticationService>().signUp(
                         email: emailController.text.trim(),
                         password: passwordController.text.trim(),
                       );
+                      if(validate()){
+                        showAlert();
+                      }
+  
                     },
                     child:Text('Create Account',style: TextStyle(fontSize: 16.0),),
                   ),
@@ -177,3 +187,4 @@ class SignUp extends StatelessWidget {
     );
   }
 }
+
