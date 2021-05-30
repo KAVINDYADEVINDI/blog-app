@@ -130,7 +130,7 @@ class _UploadImageState extends State<UploadImage> {
     final urlDownload = await snapshot.ref.getDownloadURL();
 
     print('Download-Link: $urlDownload');
-  }
+  }//
 
   Widget buildUploadStatus(UploadTask task) => StreamBuilder<TaskSnapshot>(
         stream: task.snapshotEvents,
