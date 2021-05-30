@@ -23,13 +23,33 @@ class _PostsState extends State<Posts> {
   
           return ListView(
             children: snapshot.data.docs.map((document) {
-              return Container(
-                child:Card(
+              return Card(
                   elevation: 10.0,
-                  margin: ,
-                ),
-                child: Center(child: Text(document['description'])),
-              );
+                  margin: EdgeInsets.all(15.0),
+
+                  child: Container(
+                    padding: EdgeInsets.all(14.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+
+                      children:<Widget> [
+                        child:Row(
+                          Text(
+                          document['date'],
+                          style:Theme.of(context).textTheme.subtitle1,
+                          textAlign: TextAlign.left,
+                        ),
+                         Text(
+                          document['time'],
+                          style:Theme.of(context).textTheme.subtitle1,
+                          textAlign: TextAlign.center,
+                        ),
+                        )
+                      ],
+                    ),),
+                );
+                // child: Center(child: Text(document['description'])),
+            
             }).toList(),
           );
         },
