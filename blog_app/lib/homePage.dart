@@ -1,5 +1,6 @@
 
 import 'package:blog_app/authentication_service.dart';
+import 'package:blog_app/setting.dart';
 import 'package:blog_app/uploadphoto.dart';
 
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   List tabs=[
     null,
     UploadImage(),
-    null,
+    Setting(),
   ];
 
  
