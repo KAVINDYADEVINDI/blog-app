@@ -5,6 +5,8 @@ import 'package:blog_app/uploadphoto.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'allposts.dart';
+
 
 class HomePage extends StatefulWidget {
   @override
@@ -16,7 +18,7 @@ class _HomePageState extends State<HomePage> {
   int currentindex = 0;
 
   List tabs=[
-    null,
+    Posts(),
     UploadImage(),
     Setting(),
   ];
@@ -81,7 +83,7 @@ class _HomePageState extends State<HomePage> {
 
           backgroundColor: Colors.lightBlueAccent[300],
           //fixedColor: Colors.blue[900],
-          elevation: 63.0,
+          elevation: 16.0,
           // selectedItemColor:Colors.blue[800] ,
           // unselectedItemColor: Colors.black87,
           selectedLabelStyle: TextStyle(fontSize: 17.0),
