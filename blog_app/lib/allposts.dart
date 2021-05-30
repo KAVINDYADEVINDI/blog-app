@@ -33,18 +33,32 @@ class _PostsState extends State<Posts> {
                       crossAxisAlignment: CrossAxisAlignment.start,
 
                       children:<Widget> [
-                        child:Row(
+                       new Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children:<Widget>[
                           Text(
-                          document['date'],
-                          style:Theme.of(context).textTheme.subtitle1,
-                          textAlign: TextAlign.left,
-                        ),
-                         Text(
-                          document['time'],
-                          style:Theme.of(context).textTheme.subtitle1,
-                          textAlign: TextAlign.center,
-                        ),
-                        )
+                            document['date'],
+                            style:Theme.of(context).textTheme.subtitle1,
+                            textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            document['time'],
+                            style:Theme.of(context).textTheme.subtitle1,
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+
+                      SizedBox(height: 10.0,),
+                      Image.network(document['image'],fit: BoxFit.cover,),
+                      SizedBox(height: 10.0,),
+
+                      Text(
+                        document['description'],
+                        style:Theme.of(context).textTheme.subtitle1,
+                        textAlign: TextAlign.center,
+                      ),
+                        
                       ],
                     ),),
                 );
