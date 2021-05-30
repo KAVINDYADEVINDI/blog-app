@@ -18,7 +18,6 @@ class UploadImage extends StatefulWidget {
 
 class _UploadImageState extends State<UploadImage> {
   final formKey= GlobalKey<FormState>();
-  final navigatorKey = GlobalKey<NavigatorState>();
   
   UploadTask task;
   File file;
@@ -113,7 +112,6 @@ class _UploadImageState extends State<UploadImage> {
                   
                   task != null ? buildUploadStatus(task) : Container(),
                   
-                  SizedBox(height: 20.0,)
                 ],
               
           ),
@@ -181,7 +179,6 @@ class _UploadImageState extends State<UploadImage> {
                   center: new Text("$percentage%"),
                   progressColor: Colors.green,
                   animationDuration: 5000,
-                  widgetIndicator: showalert(),
                   circularStrokeCap: CircularStrokeCap.round,
             );
            
@@ -199,10 +196,17 @@ class _UploadImageState extends State<UploadImage> {
 
 
 Widget showalert(){
-  return Alert(
-        context: navigatorKey.currentContext,
-        title: ' Welcome to the Blog App',
-        
-    ).show();
-}
+   return ListView(
+     children: [
+       
+       AlertDialog(
+              title: Text('Post Added Succesfully'),  // To display the title it is optional
+                // Message which will be pop up on the screen
+              // Action widget which will provide the user to acknowledge the choice
+               
+      )
+     ],
+   );
+   
+  }
 }
