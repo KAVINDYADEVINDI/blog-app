@@ -1,6 +1,5 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class Posts extends StatefulWidget {
@@ -25,7 +24,11 @@ class _PostsState extends State<Posts> {
           return ListView(
             children: snapshot.data.docs.map((document) {
               return Container(
-                child: Center(child: Text(document['date'])),
+                child:Card(
+                  elevation: 10.0,
+                  margin: ,
+                ),
+                child: Center(child: Text(document['description'])),
               );
             }).toList(),
           );
