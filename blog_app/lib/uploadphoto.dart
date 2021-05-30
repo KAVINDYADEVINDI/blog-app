@@ -15,9 +15,21 @@ class UploadImage extends StatefulWidget {
 }
 
 class _UploadImageState extends State<UploadImage> {
-UploadTask task;
+  final formKey= GlobalKey<FormState>();
+  UploadTask task;
   File file;
+  String _myvalue;
 
+  bool validateAndSave(){
+    final form =formKey.currentState;
+    if(form.validate()){
+      form.save();
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
   @override
   Widget build(BuildContext context) {
     final fileName = file != null ? basename(file.path) : 'No File Selected';
@@ -29,64 +41,67 @@ UploadTask task;
          Container(
           padding: EdgeInsets.all(32),
           
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [            
-                logo(),
-                ButtonWidget(
-                  text: 'Select File',
-                  icon: Icons.attach_file,
-                  onClicked: selectFile,
-                ),
-                SizedBox(height: 8),
-                Padding(padding:EdgeInsets.only(left: 120.0),
-                child:Text(
-                  fileName,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500,),
-                ),
-                ),
-                SizedBox(height: 38),
-                ButtonWidget(
-                  text: 'Upload File',
-                  icon: Icons.cloud_upload_outlined,
-                  onClicked: uploadFile,
-                ),
-                SizedBox(height: 20),
-                task != null ? buildUploadStatus(task) : Container(),
+            child: Form(
+              key: formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [            
+                  logo(),
+                  ButtonWidget(
+                    text: 'Select File',
+                    icon: Icons.attach_file,
+                    onClicked: selectFile,
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    fileName,
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500,),
+                  ),
+                  
+                  SizedBox(height: 38),
+                  ButtonWidget(
+                    text: 'Upload File',
+                    icon: Icons.cloud_upload_outlined,
+                    onClicked: uploadFile,
+                  ),
+                  SizedBox(height: 20),
+                  
+                  task != null ? buildUploadStatus(task) : Container(),
 
-                SizedBox(height: 20),
-                Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                    child:TextFormField(
-                      decoration: InputDecoration(
-                        hintText: "Enter Details",
-                        prefixIcon: Icon(Icons.details),
+                  SizedBox(height: 20),
+                  Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                      child:TextFormField(
+                        decoration: InputDecoration(
+                          hintText: "Enter Description",
+                          prefixIcon: Icon(Icons.details),
+                        ),
+                        validator: (value){
+                          if(value.isEmpty) {
+                            return 'This field is required';
+                          }
+                          else {
+                            return null;
+                          }
+                          
+                        },
+                        onSaved: (value){
+                          return _myvalue=value;
+                        },
                       ),
-                      validator: (value){
-                        if(value.isEmpty) {
-                          return 'This field is required';
-                        }
-                        else {
-                          return null;
-                        }
-                        
+                    ),
+                  SizedBox(height: 10.0,),
+                  Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                    child:ElevatedButton(
+                      onPressed: () {             
+                       validateAndSave();
                       },
-                      // onSaved: (value){
-                      //   return _password=value;
-                      // },
+                      child:Text('Submit Post',style: TextStyle(fontSize: 16.0),),
                     ),
                   ),
-                SizedBox(height: 10.0,),
-                Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                  child:ElevatedButton(
-                    onPressed: () {             
-                     
-                    },
-                    child:Text('Submit Post',style: TextStyle(fontSize: 16.0),),
-                  ),
-                ),
-              ],
-            
+                ],
+              
           ),
+            ),
         ),],
       ),
     );
