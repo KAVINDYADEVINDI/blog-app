@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
 
           backgroundColor: Colors.lightBlueAccent[300],
           //fixedColor: Colors.blue[900],
-          elevation: 23.0,
+          elevation: 63.0,
           // selectedItemColor:Colors.blue[800] ,
           // unselectedItemColor: Colors.black87,
           selectedLabelStyle: TextStyle(fontSize: 17.0),

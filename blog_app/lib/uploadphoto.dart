@@ -1,12 +1,15 @@
 import 'dart:io';
-
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:file_picker/file_picker.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:blog_app/api/firebase_api.dart';
-import 'package:blog_app/button_widget.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
+
+//import 'homePage.dart';
 
 class UploadImage extends StatefulWidget {
   @override
@@ -15,6 +18,7 @@ class UploadImage extends StatefulWidget {
 
 class _UploadImageState extends State<UploadImage> {
   final formKey= GlobalKey<FormState>();
+  
   UploadTask task;
   File file;
   String _myvalue;
@@ -29,10 +33,26 @@ class _UploadImageState extends State<UploadImage> {
       return false;
     }
   }
+  
+  void savetoDatabase(String url) {
+    var dbTimeKey= DateTime.now();
+    var formatDate=DateFormat('MMM d,yyyy');
+    var formatTime=DateFormat('EEEE,hh:mm aaa');
+
+    String date=formatDate.format(dbTimeKey);
+    String time=formatTime.format(dbTimeKey);
+
+    FirebaseFirestore.instance
+                .collection('Post')
+                .add({"image":url,
+      "description":_myvalue,
+      "date":date,
+      "time":time,});
+
+  }
+
   @override
   Widget build(BuildContext context) {
-    final fileName = file != null ? basename(file.path) : 'No File Selected';
-
     return Scaffold(
       
       body: ListView(
@@ -44,29 +64,17 @@ class _UploadImageState extends State<UploadImage> {
               key: formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [            
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height: 20),            
                   logo(),
-                  ButtonWidget(
-                    text: 'Select File',
-                    icon: Icons.attach_file,
-                    onClicked: selectFile,
+                  FloatingActionButton(
+                    autofocus: true,
+                    onPressed: selectFile,
+                    tooltip: 'Add Image',
+                    child: Icon(Icons.add_a_photo),
                   ),
-                  SizedBox(height: 8),
-                  Text(
-                    fileName,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500,),
-                  ),
-                  
-                  SizedBox(height: 38),
-                  ButtonWidget(
-                    text: 'Upload File',
-                    icon: Icons.cloud_upload_outlined,
-                    onClicked: uploadFile,
-                  ),
-                  SizedBox(height: 20),
-                  
-                  task != null ? buildUploadStatus(task) : Container(),
-
+                 
                   SizedBox(height: 20),
                   Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                       child:TextFormField(
@@ -88,15 +96,23 @@ class _UploadImageState extends State<UploadImage> {
                         },
                       ),
                     ),
-                  SizedBox(height: 10.0,),
+                     
+                  SizedBox(height: 10),
                   Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                     child:ElevatedButton(
-                      onPressed: () {             
-                       validateAndSave();
-                      },
-                      child:Text('Submit Post',style: TextStyle(fontSize: 16.0),),
-                    ),
-                  ),
+                    child: Text('Upload Post'),
+                    onPressed: ()=>{
+                      validateAndSave(),
+                      uploadFile(),
+                      
+                    },
+                    
+                    ),),
+                  SizedBox(height: 50,width: 100,),
+                  
+                  task != null ? buildUploadStatus(task) : Container(),
+                  
+                  SizedBox(height: 20.0,)
                 ],
               
           ),
@@ -114,7 +130,6 @@ class _UploadImageState extends State<UploadImage> {
 
     setState(() => file = File(path));
   }
-
   Future uploadFile() async {
     if (file == null) return;
 
@@ -129,28 +144,13 @@ class _UploadImageState extends State<UploadImage> {
     final snapshot = await task.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
 
+    String url=urlDownload.toString();
     print('Download-Link: $urlDownload');
+    savetoDatabase(url);
   }//
-
-  Widget buildUploadStatus(UploadTask task) => StreamBuilder<TaskSnapshot>(
-        stream: task.snapshotEvents,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final snap = snapshot.data;
-            final progress = snap.bytesTransferred / snap.totalBytes;
-            final percentage = (progress * 100).toStringAsFixed(2);
-
-            return Text(
-              '$percentage %',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            );
-          } else {
-            return Container();
-          }
-        },
-  );
-
-    Widget logo(){
+  
+  
+  Widget logo(){
     return Container(
       width: 300,
       height: 200,
@@ -163,4 +163,57 @@ class _UploadImageState extends State<UploadImage> {
       ),
     );
   }
+  Widget buildUploadStatus(UploadTask task) => StreamBuilder<TaskSnapshot>(
+    
+        stream: task.snapshotEvents,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final snap = snapshot.data;
+            final progress = snap.bytesTransferred / snap.totalBytes;
+            final percentage = (progress * 100).toStringAsFixed(2);
+            
+            return CircularPercentIndicator(
+                  radius: 150.0,
+                  lineWidth: 7.0,
+                  percent: 1.0,
+                  animation: true,
+                  center: new Text("$percentage%"),
+                  progressColor: Colors.green,
+                  animationDuration: 5000,
+                  widgetIndicator: showalert(),
+                  circularStrokeCap: CircularStrokeCap.round,
+            );
+           
+           
+            
+          } else {
+            return Container();
+          }
+          
+        },
+       
+        
+        
+  );
+
+
+Widget showalert(){
+   return  showAlert(){
+      Alert(
+        context:context,
+        title: ' Welcome to the Blog App',
+        buttons: [
+          DialogButton(
+            child: Text('Ok'),
+            onPressed: ()=>{
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_){
+                    return HomePage();
+                  }
+                ))
+            },
+          )
+        ]
+        ).show();
+    }
 }
