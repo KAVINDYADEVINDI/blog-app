@@ -1,5 +1,7 @@
 
 import 'package:blog_app/authentication_service.dart';
+import 'package:blog_app/uploadphoto.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,26 +13,23 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  int _selectedIndex = 0;
+  int currentindex = 0;
 
-  static const List<Widget> _widgetOptions = <Widget>[  
-    Text('Home Page', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),  
-    Text('Search Page', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),  
-    Text('Profile Page', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),  
+  List tabs=[
+    null,
+    UploadImage(),
+    null,
   ];
 
-  void _onItemTapped(int index) {  
-    setState(() {  
-      _selectedIndex = index;  
-    });  
-  }  
+ 
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title:Text('Home',style:TextStyle(fontSize: 20.0)),
+        title:Text('Blog Post',style:TextStyle(fontSize: 20.0)),
         actions:<Widget>[
           IconButton(
             icon: Icon(Icons.logout),
@@ -53,15 +52,13 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
 
-      body:Center(  
-        child: _widgetOptions.elementAt(_selectedIndex),  
-      ),  
+      body:tabs[currentindex],   
        bottomNavigationBar: BottomNavigationBar(
          
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               label: "Home",
-              icon: Icon(Icons.home,),
+              icon: Icon(Icons.home,),        
               
             ),
             BottomNavigationBarItem(
@@ -73,18 +70,24 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(Icons.settings,),  
             ),
           ],
-          //type: BottomNavigationBarType.shifting,  
-          currentIndex: _selectedIndex, 
-          onTap: _onItemTapped, 
+         // type: BottomNavigationBarType.shifting,  
+          
+          onTap:(index){
+            setState(() {
+              currentindex=index;          
+            });
+            
+          } , 
 
-          backgroundColor: Colors.blue[100],
-          fixedColor: Colors.blue[900],
+          backgroundColor: Colors.lightBlueAccent[300],
+          //fixedColor: Colors.blue[900],
           elevation: 13.0,
-          unselectedItemColor: Colors.black87,
+          // selectedItemColor:Colors.blue[800] ,
+          // unselectedItemColor: Colors.black87,
           selectedLabelStyle: TextStyle(fontSize: 17.0),
           unselectedLabelStyle: TextStyle(color:Colors.black87,fontSize: 14.0),
           selectedIconTheme: IconThemeData (
-            color: Colors.blue[900],
+            color: Colors.blue[800],
             opacity: 1.0,
             size: 35
           ),

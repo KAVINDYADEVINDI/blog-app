@@ -21,9 +21,7 @@ class _SignUpState extends State<SignUp> {
 
   final TextEditingController passwordController = TextEditingController();
 
-  String _email="";
 
-  String _password="";
    bool _obscureText = true;
 
   bool validate(){
@@ -107,9 +105,9 @@ class _SignUpState extends State<SignUp> {
                         return "Please enter a valid email";
                       }
                     },
-                    onSaved: (value){
-                      return _email=value;
-                    },
+                    // onSaved: (value){
+                    //   return _email=value;
+                    // },
                   ),
                 ),
                 
@@ -143,9 +141,9 @@ class _SignUpState extends State<SignUp> {
                       }
                       
                     },
-                    onSaved: (value){
-                      return _password=value;
-                    },
+                    // onSaved: (value){
+                    //   return _password=value;
+                    // },
                   ),
                 ),
 
