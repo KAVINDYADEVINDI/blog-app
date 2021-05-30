@@ -15,7 +15,7 @@ class ButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: Color.fromRGBO(67, 100, 163, 1),
+          primary: Color.fromRGBO(119,136,153, 1),
           minimumSize: Size.fromHeight(40),
         ),
         child: buildContent(),
