@@ -18,6 +18,7 @@ class UploadImage extends StatefulWidget {
 
 class _UploadImageState extends State<UploadImage> {
   final formKey= GlobalKey<FormState>();
+  final navigatorKey = GlobalKey<NavigatorState>();
   
   UploadTask task;
   File file;
@@ -198,22 +199,10 @@ class _UploadImageState extends State<UploadImage> {
 
 
 Widget showalert(){
-   return  showAlert(){
-      Alert(
-        context:context,
+  return Alert(
+        context: navigatorKey.currentContext,
         title: ' Welcome to the Blog App',
-        buttons: [
-          DialogButton(
-            child: Text('Ok'),
-            onPressed: ()=>{
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (_){
-                    return HomePage();
-                  }
-                ))
-            },
-          )
-        ]
-        ).show();
-    }
+        
+    ).show();
+}
 }
