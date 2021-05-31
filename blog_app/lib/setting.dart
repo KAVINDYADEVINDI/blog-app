@@ -47,6 +47,9 @@ class Setting extends StatelessWidget {
                           if(value.isEmpty) {
                             return 'This field is required';
                           }
+                          else if(value.length<4) {
+                            return "Enter a valid Name";
+                          }
                           else {
                             return null;
                           }
@@ -87,6 +90,9 @@ class Setting extends StatelessWidget {
                         validator: (value){
                           if(value.isEmpty) {
                             return 'This field is required';
+                          }
+                          else if(value.length<5) {
+                            return "Enter a valid Subject";
                           }
                           else {
                             return null;

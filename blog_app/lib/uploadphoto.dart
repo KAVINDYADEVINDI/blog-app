@@ -87,6 +87,9 @@ class _UploadImageState extends State<UploadImage> {
                           if(value.isEmpty) {
                             return 'This field is required';
                           }
+                          else if(value.trim().length<5) {
+                            return "Enter a valid description";
+                          }
                           else {
                             return null;
                           }
