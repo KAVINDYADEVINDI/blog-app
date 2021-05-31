@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
@@ -20,7 +19,6 @@ class UploadImage extends StatefulWidget {
 
 class _UploadImageState extends State<UploadImage> {
   final formKey= GlobalKey<FormState>();
-  final navigatorKey = GlobalKey<NavigatorState>();
   
   UploadTask task;
   File file;
