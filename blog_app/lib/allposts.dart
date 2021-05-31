@@ -38,13 +38,12 @@ class _PostsState extends State<Posts> {
                         children:<Widget>[
                           Text(
                             document['date'],
-                            style:Theme.of(context).textTheme.subtitle1,
-                            textAlign: TextAlign.center,
+                            style:TextStyle(color: Colors.grey[400],fontSize: 14.0),textAlign: TextAlign.center,
+                            
                           ),
                           Text(
                             document['time'],
-                            style:Theme.of(context).textTheme.subtitle1,
-                            textAlign: TextAlign.center,
+                            style:TextStyle(color: Colors.grey[400],fontSize: 14.0),textAlign: TextAlign.center,
                           ),
                         ],
                       ),
@@ -52,11 +51,12 @@ class _PostsState extends State<Posts> {
                       SizedBox(height: 10.0,),
                       Image.network(document['image'],fit: BoxFit.cover,),
                       SizedBox(height: 10.0,),
-
+                      
+                      Divider(color:Colors.grey[400]),
                       Text(
                         document['description'],
                         style:Theme.of(context).textTheme.subtitle1,
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.left,
                       ),
                         
                       ],
