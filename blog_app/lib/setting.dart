@@ -1,11 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server/mailgun.dart';
 
 
+class Setting extends StatefulWidget {
+  @override
+  _SettingState createState() => _SettingState();
+}
 
-class Setting extends StatelessWidget {
+class _SettingState extends State<Setting> {
   final formKey= GlobalKey<FormState>();
 
+  String _name;
+
+  String _email;
+
+  String _subject;
+
+//   main() async {
+//   String username = kavindyadewindi12345678@gmail.com;
+//   String password = kavi1997ucsc;
+//   final smtpServer = gmail(username, password); 
+
+//   // Create our email message.
+//   final message = Message()
+//     ..from = Address(username)
+//     ..recipients.add('dest@example.com') //recipent email
+//     ..ccRecipients.addAll(['destCc1@example.com', 'destCc2@example.com']) //cc Recipents emails
+//     ..bccRecipients.add(Address('bccAddress@example.com')) //bcc Recipents emails
+//     ..subject = 'Test Dart Mailer library :: 😀 :: ${DateTime.now()}' //subject of the email
+//     ..text = 'This is the plain text.\nThis is line 2 of the text part.'
+//      //body of the email
+
+//   try {
+//     final sendReport = await send(message, smtpServer);
+//     print('Message sent: ' + sendReport.toString()); //print if the email is sent
+//   } on MailerException catch (e) {
+//     print('Message not sent. \n'+ e.toString()); //print if the email is not sent
+//     // e.toString() will show why the email is not sending
+//   }
+// } 
+  
   
   bool validate(){
     final form =formKey.currentState;
@@ -16,7 +52,6 @@ class Setting extends StatelessWidget {
       return false;
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +83,10 @@ class Setting extends StatelessWidget {
                   Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                       child:Text("You can create your own blog posts as your wish using this blog application and see all blog posts creted by all users.If you have any question please ask me."),
                   ),
+                  Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                      child:Text("WANT TO GET IN TOUCH!",
+                      style: TextStyle(fontSize: 14.0,fontWeight: FontWeight.w400,color: Colors.black54),),
+                  ),
                   SizedBox(height: 10),
                   Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                       child:TextFormField(
@@ -70,6 +109,9 @@ class Setting extends StatelessWidget {
                           }
                           
                         },
+                        onSaved: (value){
+                          return _name=value;
+                        },
                         
                       ),
                   ),
@@ -91,6 +133,9 @@ class Setting extends StatelessWidget {
                             return 'Please enter a valid email';
                           }
                           
+                        },
+                         onSaved: (value){
+                          return _email=value;
                         },
                         
                       ),
@@ -116,6 +161,9 @@ class Setting extends StatelessWidget {
                             return null;
                           }
                           
+                        },
+                        onSaved: (value){
+                          return _subject=value;
                         },
                         
                       ),
@@ -156,9 +204,4 @@ class Setting extends StatelessWidget {
       ),
     );
   }
-
- 
-  
-
-   
 }
