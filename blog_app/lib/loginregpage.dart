@@ -85,6 +85,9 @@ class LoginRegPage extends StatelessWidget {
                       if(value.isEmpty) {
                         return 'Password is required';
                       }
+                      else if(value.trim().length<1) {
+                        return "Enter a valid password";
+                      }
                       else{
                         return null;
                       }
