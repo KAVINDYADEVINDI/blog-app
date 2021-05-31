@@ -49,9 +49,11 @@ class _PostsState extends State<Posts> {
                       ),
 
                       SizedBox(height: 10.0,),
+
                       Image.network(document['image'],fit: BoxFit.cover,),
-                      SizedBox(height: 10.0,),
                       
+                      SizedBox(height: 10.0,),
+
                       Divider(color:Colors.grey[400]),
                       Text(
                         document['description'],
