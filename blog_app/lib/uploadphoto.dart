@@ -9,6 +9,8 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 
+import 'homePage.dart';
+
 //import 'homePage.dart';
 
 class UploadImage extends StatefulWidget {
@@ -18,6 +20,7 @@ class UploadImage extends StatefulWidget {
 
 class _UploadImageState extends State<UploadImage> {
   final formKey= GlobalKey<FormState>();
+  final navigatorKey = GlobalKey<NavigatorState>();
   
   UploadTask task;
   File file;
@@ -181,7 +184,11 @@ class _UploadImageState extends State<UploadImage> {
                   animationDuration: 5000,
                   footer: new TextButton(
                   onPressed:()=>{
-
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_){
+                        return HomePage();
+                      }
+                    ))
                   } , 
                   child: Text("Added Blog Post,See Home page")),
                   circularStrokeCap: CircularStrokeCap.round,
@@ -199,19 +206,6 @@ class _UploadImageState extends State<UploadImage> {
         
   );
 
+ 
 
-// Widget showalert(){
-//    return ListView(
-//      children: [
-       
-//        AlertDialog(
-//               title: Text('Post Added Succesfully'),  // To display the title it is optional
-//                 // Message which will be pop up on the screen
-//               // Action widget which will provide the user to acknowledge the choice
-               
-//       )
-//      ],
-//    );
-   
-//   }
 }
