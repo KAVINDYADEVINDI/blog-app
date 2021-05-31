@@ -133,6 +133,9 @@ class _SignUpState extends State<SignUp> {
                       if(value.isEmpty) {
                         return 'Password is required';
                       }
+                      else if(value.trim().length<1) {
+                        return "Enter a valid password";
+                      }
                       else if(value.length<6) {
                         return "Enter a password 6+ characters";
                       }
