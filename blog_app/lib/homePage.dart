@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
           } , 
 
           backgroundColor: Colors.lightBlueAccent[300],
-          //fixedColor: Colors.blue[900],
+          fixedColor: Colors.blue[900],
           elevation: 16.0,
           // selectedItemColor:Colors.blue[800] ,
           // unselectedItemColor: Colors.black87,

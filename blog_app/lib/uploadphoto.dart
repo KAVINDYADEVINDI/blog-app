@@ -179,6 +179,11 @@ class _UploadImageState extends State<UploadImage> {
                   center: new Text("$percentage%"),
                   progressColor: Colors.green,
                   animationDuration: 5000,
+                  footer: new TextButton(
+                  onPressed:()=>{
+
+                  } , 
+                  child: Text("Added Blog Post,See Home page")),
                   circularStrokeCap: CircularStrokeCap.round,
             );
            
@@ -195,18 +200,18 @@ class _UploadImageState extends State<UploadImage> {
   );
 
 
-Widget showalert(){
-   return ListView(
-     children: [
+// Widget showalert(){
+//    return ListView(
+//      children: [
        
-       AlertDialog(
-              title: Text('Post Added Succesfully'),  // To display the title it is optional
-                // Message which will be pop up on the screen
-              // Action widget which will provide the user to acknowledge the choice
+//        AlertDialog(
+//               title: Text('Post Added Succesfully'),  // To display the title it is optional
+//                 // Message which will be pop up on the screen
+//               // Action widget which will provide the user to acknowledge the choice
                
-      )
-     ],
-   );
+//       )
+//      ],
+//    );
    
-  }
+//   }
 }
