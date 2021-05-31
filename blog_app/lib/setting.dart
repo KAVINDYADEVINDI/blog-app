@@ -6,6 +6,18 @@ import 'package:email_validator/email_validator.dart';
 class Setting extends StatelessWidget {
   final formKey= GlobalKey<FormState>();
 
+  
+  bool validate(){
+    final form =formKey.currentState;
+    if(form.validate()){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
   return Scaffold(
@@ -47,7 +59,10 @@ class Setting extends StatelessWidget {
                           if(value.isEmpty) {
                             return 'This field is required';
                           }
-                          else if(value.length<4) {
+                          else if(value.trim().length<1) {
+                            return "Enter a valid Name";
+                          }
+                          else if(value.length<3) {
                             return "Enter a valid Name";
                           }
                           else {
@@ -91,6 +106,9 @@ class Setting extends StatelessWidget {
                           if(value.isEmpty) {
                             return 'This field is required';
                           }
+                          else if(value.trim().length<1) {
+                            return "Enter a valid Subject";
+                          }
                           else if(value.length<5) {
                             return "Enter a valid Subject";
                           }
@@ -107,7 +125,8 @@ class Setting extends StatelessWidget {
                   Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                       child:ElevatedButton(
                       child: Text('Send message'),
-                      onPressed: ()=>{   
+                      onPressed: ()=>{ 
+                        validate()  
                       },
                     ),
                   ),
