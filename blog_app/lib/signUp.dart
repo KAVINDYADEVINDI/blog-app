@@ -44,7 +44,7 @@ class _SignUpState extends State<SignUp> {
         title: ' Welcome to the Blog App',
         buttons: [
           DialogButton(
-            child: Text('Ok'),
+            child: Text('Ok',style: TextStyle(color: Colors.white70),),
             onPressed: ()=>{
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (_){
@@ -52,6 +52,7 @@ class _SignUpState extends State<SignUp> {
                   }
                 ))
             },
+            color: Colors.blue[900],
           )
         ]
         ).show();

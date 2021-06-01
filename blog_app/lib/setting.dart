@@ -5,6 +5,7 @@ import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server/mailgun.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'homePage.dart';
 
@@ -75,7 +76,7 @@ sendMail(String email,String name,String subject) async {
         title: ' Successfully Send message.Thank you',
         buttons: [
           DialogButton(
-            child: Text('Ok'),
+            child: Text('Ok',style: TextStyle(color: Colors.white70),),
             onPressed: ()=>{
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (_){
@@ -83,6 +84,7 @@ sendMail(String email,String name,String subject) async {
                   }
                 ))
             },
+            color: Colors.blue[900],
           )
         ]
         ).show();
@@ -90,7 +92,15 @@ sendMail(String email,String name,String subject) async {
   return Scaffold(
        appBar: AppBar(
         centerTitle: true,
-        title:Text('About',style:TextStyle(fontSize: 20.0)),
+        title:Text(
+            'About',
+            style: GoogleFonts.pacifico(
+              textStyle: Theme.of(context).textTheme.headline4,
+              fontSize: 24,
+              color: Colors.white70,
+              fontWeight: FontWeight.w500,           
+            ),
+        ),
         actions:<Widget>[
           IconButton(
             icon: Icon(Icons.logout),
@@ -151,6 +161,7 @@ sendMail(String email,String name,String subject) async {
                           hintText: "Your Name",
                           prefixIcon: Icon(Icons.person),
                         ),
+                        cursorColor: Colors.blue[900],
                         validator: (value){
                           if(value.isEmpty) {
                             return 'This field is required';
@@ -180,6 +191,7 @@ sendMail(String email,String name,String subject) async {
                           hintText: "Your Email Address",
                           prefixIcon: Icon(Icons.email),
                         ),
+                        cursorColor: Colors.blue[900],
                         validator: (value){
                           if(value.isEmpty) {
                             return 'This field is required';
@@ -206,6 +218,7 @@ sendMail(String email,String name,String subject) async {
                           hintText: "Subject",
                           prefixIcon: Icon(Icons.message),
                         ),
+                        cursorColor: Colors.blue[900],
                         validator: (value){
                           if(value.isEmpty) {
                             return 'This field is required';
@@ -231,7 +244,7 @@ sendMail(String email,String name,String subject) async {
                   SizedBox(height: 10),
                   Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                       child:ElevatedButton(
-                      child: Text('Send message'),
+                      child: Text('Send message',style: TextStyle(fontSize: 16.0),),
                       onPressed: (){ 
 
                         _email=emailController.text;
@@ -244,6 +257,10 @@ sendMail(String email,String name,String subject) async {
                           showAlert();
                         }                     
                       },
+                      style: ButtonStyle(
+                        backgroundColor:MaterialStateProperty.all<Color>(Colors.blue[900]),
+                        shadowColor: MaterialStateProperty.all<Color>(Colors.grey[700]),
+                      ),
                     ),
                   ),
                   
