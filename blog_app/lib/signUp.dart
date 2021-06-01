@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:blog_app/loginregpage.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SignUp extends StatefulWidget {
 
@@ -62,7 +63,16 @@ class _SignUpState extends State<SignUp> {
       key: _scaffoldKey,
       appBar: AppBar(
         centerTitle: true,
-        title:Text('Blog App',style:TextStyle(fontSize: 20.0)),
+        title:Text(
+            'Blog App',
+            style: GoogleFonts.pacifico(
+              textStyle: Theme.of(context).textTheme.headline4,
+              fontSize: 28,
+              color: Colors.white70,
+              fontWeight: FontWeight.w500,
+              
+            ),
+        ),
 
         elevation: 13.0, //shadow of the bottom
           // backgroundColor: Colors.blueAccent[1000],
@@ -86,6 +96,40 @@ class _SignUpState extends State<SignUp> {
               children: [
                 SizedBox(height: 10.0,),
                 logo(),
+
+                 Row(children: <Widget>[
+                    Expanded(
+                      child: new Container(
+                          margin: const EdgeInsets.only(left: 10.0, right: 10.0),
+                          child: Divider(
+                            color: Colors.black,
+                            height: 50,
+                          )),
+                    ),
+                      SizedBox(height: 10.0,),
+                      Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                        child:Text(
+                          "Create Account",
+                          style: GoogleFonts.pattaya(
+                            textStyle: Theme.of(context).textTheme.headline4,
+                            fontSize: 28,
+                            fontWeight: FontWeight.w700,
+                            
+                          ),
+                        ),
+                      ),
+        
+                    Expanded(
+                      child: new Container(
+                          margin: const EdgeInsets.only(left: 10.0, right: 10.0),
+                          child: Divider(
+                            color: Colors.black,
+                            height: 50,
+                          )),
+                    ),
+                  ]
+                ),
+        
                 SizedBox(height: 20.0,),
                 Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                   child:TextFormField(
@@ -94,6 +138,7 @@ class _SignUpState extends State<SignUp> {
                       hintText: "Enter Email Address",
                       prefixIcon: Icon(Icons.email) 
                     ),
+                    cursorColor: Colors.blue[900],
                     validator: (value){
                      if(value.isEmpty) {
                         return 'Email is required';
@@ -116,6 +161,7 @@ class _SignUpState extends State<SignUp> {
                   child:TextFormField(
                     controller: passwordController,
                     obscureText: _obscureText,
+                    cursorColor: Colors.blue[900],
                     decoration: InputDecoration(
                       hintText: "Enter Password",
                       prefixIcon: Icon(Icons.lock_outline),
@@ -164,6 +210,11 @@ class _SignUpState extends State<SignUp> {
                       }                
                      
                     },
+                    style: ButtonStyle(
+                      backgroundColor:MaterialStateProperty.all<Color>(Colors.blue[900]),
+                      shadowColor: MaterialStateProperty.all<Color>(Colors.grey[700]),
+                    ),
+
                     child:Text('Create Account',style: TextStyle(fontSize: 16.0),),
                   ),
                 ),
@@ -177,7 +228,7 @@ class _SignUpState extends State<SignUp> {
                       ))
                     },
                   child:Text('Already have an account? LogIn',
-                  style: TextStyle(fontSize: 16.0),),
+                  style: TextStyle(fontSize: 16.0,color: Colors.blue[900]),),
                 ),
               ],
             ),
