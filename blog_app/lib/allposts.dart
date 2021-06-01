@@ -3,6 +3,7 @@ import 'package:blog_app/authentication_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Posts extends StatefulWidget {
   @override
@@ -15,7 +16,16 @@ class _PostsState extends State<Posts> {
    return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title:Text('Home Page',style:TextStyle(fontSize: 20.0)),
+        title:Text(
+            'Home Page',
+            style: GoogleFonts.pacifico(
+              textStyle: Theme.of(context).textTheme.headline4,
+              fontSize: 28,
+              color: Colors.white70,
+              fontWeight: FontWeight.w500,
+              
+            ),
+        ),
         actions:<Widget>[
           IconButton(
             icon: Icon(Icons.logout),

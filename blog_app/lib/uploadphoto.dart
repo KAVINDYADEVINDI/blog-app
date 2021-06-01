@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'homePage.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 //import 'homePage.dart';
 
@@ -58,7 +59,16 @@ class _UploadImageState extends State<UploadImage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title:Text('Add Blog Post',style:TextStyle(fontSize: 20.0)),
+        title:Text(
+            'Home Page',
+            style: GoogleFonts.pacifico(
+              textStyle: Theme.of(context).textTheme.headline4,
+              fontSize: 28,
+              color: Colors.white70,
+              fontWeight: FontWeight.w500,
+              
+            ),
+        ),
         actions:<Widget>[
           IconButton(
             icon: Icon(Icons.logout),
