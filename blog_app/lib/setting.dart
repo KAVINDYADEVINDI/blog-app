@@ -29,8 +29,8 @@ class _SettingState extends State<Setting> {
 
 
 sendMail(String email,String name,String subject) async {
-  print("email"+email);
-  print("name"+name);
+  //print("email"+email);
+  //print("name"+name);
   String username = '$email';
   String password = 'kavi1997ucsc';
 
@@ -47,9 +47,9 @@ sendMail(String email,String name,String subject) async {
     final sendReport = await send(message, smtpServer);
     print('Message sent: ' + sendReport.toString());
   } on MailerException catch (e) {
-    print('Message not sent.');
+   // print('Message not sent.');
     for (var p in e.problems) {
-      print('Problem: ${p.code}: ${p.msg}'); 
+      //print('Problem: ${p.code}: ${p.msg}'); 
     }
   }
   // DONE
@@ -172,6 +172,7 @@ sendMail(String email,String name,String subject) async {
                           else if(value.length<3) {
                             return "Enter a valid Name";
                           }
+                          
                           else {
                             return null;
                           }

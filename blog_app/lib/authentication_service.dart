@@ -38,7 +38,7 @@ class AuthenticationService {
         return "already exist";
       }
     }  catch (e) {
-      print(e);
+     // print(e);
     }
   }
 

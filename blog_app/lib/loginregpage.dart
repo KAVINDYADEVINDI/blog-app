@@ -112,6 +112,9 @@ class LoginRegPage extends StatelessWidget {
                       else if(EmailValidator.validate(value)){
                         return null;
                       }
+                      else if(!RegExp("^[a-zA-Z0-9.!#%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*").hasMatch(value)){
+                       return 'Enter a valid email address';
+                      }
                       else{
                         return "Please enter a valid email";
                       }
