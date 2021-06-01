@@ -29,30 +29,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      // appBar: AppBar(
-      //   centerTitle: true,
-      //   title:Text('Blog Post',style:TextStyle(fontSize: 20.0)),
-      //   actions:<Widget>[
-      //     IconButton(
-      //       icon: Icon(Icons.logout),
-      //       onPressed: () {
-      //         context.read<AuthenticationService>().signOut();
-      //       },
-      //         //child: Text("Sign out"),
-      //     ),
-      //   ],
-      //   elevation: 13.0, //shadow of the bottom
-      //     // backgroundColor: Colors.blueAccent[1000],
-      //   flexibleSpace: Container(
-      //     decoration: BoxDecoration(
-      //       gradient: LinearGradient(
-      //         colors: [Colors.blue,Colors.black],
-      //         begin:Alignment.topCenter ,
-      //         end: Alignment.bottomCenter,
-      //       ),
-      //     ),
-      //   ),
-      // ),
 
       body:tabs[currentindex],   
        bottomNavigationBar: BottomNavigationBar(
