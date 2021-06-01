@@ -1,7 +1,12 @@
+import 'package:blog_app/authentication_service.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:mailer/mailer.dart';
-import 'package:mailer/smtp_server.dart';
+import 'package:mailer/smtp_server/mailgun.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:provider/provider.dart';
+
+import 'homePage.dart';
 
 class Setting extends StatefulWidget {
   @override
@@ -11,23 +16,30 @@ class Setting extends StatefulWidget {
 class _SettingState extends State<Setting> {
   final formKey= GlobalKey<FormState>();
 
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController subjectController = TextEditingController();
+
   String _name;
 
   String _email;
 
   String _subject;
 
-sendMail() async {
-  String username = '$_email';
+
+sendMail(String email,String name,String subject) async {
+  print("email"+email);
+  print("name"+name);
+  String username = '$email';
   String password = 'kavi1997ucsc';
 
-  final smtpServer = gmail(username, password);
+ final smtpServer = mailgun(username, password);
   // Create our message.
   final message = Message()
-    ..from = Address(username, '$_name')
+    ..from = Address(username, '$name')
     ..recipients.add('kavindyadewindi12345678@gmail.com')
     ..subject = 'The Blog Post Mobile Application :: 😀 :: ${DateTime.now()}'
-    ..text = '$_subject\n'
+    ..text = '$subject\n'
     ..html = "<h1>Test</h1>\n<p>Hey! I wants to connect with you</p>";
 
   try {
@@ -36,16 +48,17 @@ sendMail() async {
   } on MailerException catch (e) {
     print('Message not sent.');
     for (var p in e.problems) {
-      print('Problem: ${p.code}: ${p.msg}');
+      print('Problem: ${p.code}: ${p.msg}'); 
     }
   }
   // DONE
 }
-  
+ 
   
   bool validate(){
     final form =formKey.currentState;
     if(form.validate()){
+      form.save();
       return true;
     }
     else{
@@ -55,8 +68,51 @@ sendMail() async {
 
   @override
   Widget build(BuildContext context) {
+
+    showAlert(){
+      Alert(
+        context:context,
+        title: ' Successfully Send message.Thank you',
+        buttons: [
+          DialogButton(
+            child: Text('Ok'),
+            onPressed: ()=>{
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_){
+                    return HomePage();
+                  }
+                ))
+            },
+          )
+        ]
+        ).show();
+    }
   return Scaffold(
-      
+       appBar: AppBar(
+        centerTitle: true,
+        title:Text('About',style:TextStyle(fontSize: 20.0)),
+        actions:<Widget>[
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              context.read<AuthenticationService>().signOut();
+            },
+              //child: Text("Sign out"),
+          ),
+        ],
+        elevation: 13.0, //shadow of the bottom
+          // backgroundColor: Colors.blueAccent[1000],
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.blue,Colors.black],
+              begin:Alignment.topCenter ,
+              end: Alignment.bottomCenter,
+            ),
+          ),
+        ),
+      ),
+
       body: ListView(
         children: <Widget>[
          Container(
@@ -90,6 +146,7 @@ sendMail() async {
                   SizedBox(height: 10),
                   Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                       child:TextFormField(
+                        controller: nameController,
                         decoration: InputDecoration(
                           hintText: "Your Name",
                           prefixIcon: Icon(Icons.person),
@@ -109,15 +166,16 @@ sendMail() async {
                           }
                           
                         },
-                        onSaved: (value){
-                          return _name=value;
-                        },
+                        // onSaved: (value){
+                        //   return _name=value.trim();
+                        // },
                         
                       ),
                   ),
                   SizedBox(height: 10),
                   Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                       child:TextFormField(
+                        controller: emailController,
                         decoration: InputDecoration(
                           hintText: "Your Email Address",
                           prefixIcon: Icon(Icons.email),
@@ -134,15 +192,16 @@ sendMail() async {
                           }
                           
                         },
-                         onSaved: (value){
-                          return _email=value;
-                        },
+                        //  onSaved: (value){
+                        //   return _email=value;
+                        // },
                         
                       ),
                   ),
                   SizedBox(height: 10),
                   Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                       child:TextFormField(
+                        controller: subjectController,
                         decoration: InputDecoration(
                           hintText: "Subject",
                           prefixIcon: Icon(Icons.message),
@@ -162,9 +221,9 @@ sendMail() async {
                           }
                           
                         },
-                        onSaved: (value){
-                          return _subject=value;
-                        },
+                        // onSaved: (value){
+                        //   return _subject=value;
+                        // },
                         
                       ),
                   ),
@@ -173,9 +232,17 @@ sendMail() async {
                   Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                       child:ElevatedButton(
                       child: Text('Send message'),
-                      onPressed: ()=>{ 
-                        validate(),
-                        sendMail()  
+                      onPressed: (){ 
+
+                        _email=emailController.text;
+                        _subject=subjectController.text;
+                        _name=nameController.text;
+
+                        sendMail(_email,_name,_subject);
+                        if(validate()){
+                          
+                          showAlert();
+                        }                     
                       },
                     ),
                   ),

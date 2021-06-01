@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:blog_app/authentication_service.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
@@ -7,7 +8,7 @@ import 'package:blog_app/api/firebase_api.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
-
+import 'package:provider/provider.dart';
 import 'homePage.dart';
 
 //import 'homePage.dart';
@@ -55,7 +56,30 @@ class _UploadImageState extends State<UploadImage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
+      appBar: AppBar(
+        centerTitle: true,
+        title:Text('Add Blog Post',style:TextStyle(fontSize: 20.0)),
+        actions:<Widget>[
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              context.read<AuthenticationService>().signOut();
+            },
+              //child: Text("Sign out"),
+          ),
+        ],
+        elevation: 13.0, //shadow of the bottom
+          // backgroundColor: Colors.blueAccent[1000],
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.blue,Colors.black],
+              begin:Alignment.topCenter ,
+              end: Alignment.bottomCenter,
+            ),
+          ),
+        ),
+      ),
       body: ListView(
         children: <Widget>[
          Container(

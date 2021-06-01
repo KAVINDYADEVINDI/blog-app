@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:blog_app/signUp.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginRegPage extends StatelessWidget {
 
@@ -26,7 +27,17 @@ class LoginRegPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title:Text('Blog App',style:TextStyle(fontSize: 20.0)),
+        title:Text(
+            'Blog App',
+            style: GoogleFonts.pacifico(
+              textStyle: Theme.of(context).textTheme.headline4,
+              fontSize: 28,
+              color: Colors.white70,
+              fontWeight: FontWeight.w500,
+              
+            ),
+        ),
+        
 
         elevation: 13.0, //shadow of the bottom
           // backgroundColor: Colors.blueAccent[1000],
@@ -50,14 +61,50 @@ class LoginRegPage extends StatelessWidget {
               children: [
                 SizedBox(height: 10.0,),
                 logo(),
+                Row(children: <Widget>[
+                    Expanded(
+                      child: new Container(
+                          margin: const EdgeInsets.only(left: 10.0, right: 10.0),
+                          child: Divider(
+                            color: Colors.black,
+                            height: 50,
+                          )),
+                    ),
+                      SizedBox(height: 10.0,),
+                      Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                        child:Text(
+                          "Let's Get Started!",
+                          style: GoogleFonts.pattaya(
+                            textStyle: Theme.of(context).textTheme.headline4,
+                            fontSize: 28,
+                            fontWeight: FontWeight.w700,
+                            
+                          ),
+                        ),
+                      ),
+        
+                    Expanded(
+                      child: new Container(
+                          margin: const EdgeInsets.only(left: 10.0, right: 10.0),
+                          child: Divider(
+                            color: Colors.black,
+                            height: 50,
+                          )),
+                    ),
+                  ]
+                ),
+        
+                
                 SizedBox(height: 20.0,),
                 Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                   child:TextFormField(
                     controller: emailController,
                     decoration: InputDecoration(
                       hintText: "Enter Email Address",
-                      prefixIcon: Icon(Icons.email) 
+                      prefixIcon: Icon(Icons.email),
+                     
                     ),
+                    cursorColor: Colors.blue[900],
                     validator: (value){
                      if(value.isEmpty) {
                         return 'Email is required';
@@ -78,9 +125,11 @@ class LoginRegPage extends StatelessWidget {
                     controller: passwordController,
                     decoration: InputDecoration(
                       hintText: "Enter Password",
-                      prefixIcon: Icon(Icons.lock_outline)  
+                      prefixIcon: Icon(Icons.lock_outline),
+                       
                     ),
                     obscureText: true,
+                    cursorColor: Colors.blue[900],
                     validator: (value){
                       if(value.isEmpty) {
                         return 'Password is required';
@@ -108,6 +157,10 @@ class LoginRegPage extends StatelessWidget {
                       
                       
                     },
+                    style: ButtonStyle(
+                      backgroundColor:MaterialStateProperty.all<Color>(Colors.blue[900]),
+                      shadowColor: MaterialStateProperty.all<Color>(Colors.grey[700]),
+                    ),
                     child:Text('Login',style: TextStyle(fontSize: 16.0),),
                   ),
                 ),
@@ -121,7 +174,7 @@ class LoginRegPage extends StatelessWidget {
                       ))
                   },
                   child:Text('Not have an account? Create Account',
-                  style: TextStyle(fontSize: 16.0),),
+                  style: TextStyle(fontSize: 16.0,color: Colors.blue[900]),),
                 ),
               ],
             ),

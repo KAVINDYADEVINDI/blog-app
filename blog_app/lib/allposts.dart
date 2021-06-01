@@ -1,6 +1,8 @@
 
+import 'package:blog_app/authentication_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Posts extends StatefulWidget {
   @override
@@ -11,7 +13,30 @@ class _PostsState extends State<Posts> {
   @override
   Widget build(BuildContext context) {
    return Scaffold(
-      
+      appBar: AppBar(
+        centerTitle: true,
+        title:Text('Home Page',style:TextStyle(fontSize: 20.0)),
+        actions:<Widget>[
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              context.read<AuthenticationService>().signOut();
+            },
+              //child: Text("Sign out"),
+          ),
+        ],
+        elevation: 13.0, //shadow of the bottom
+          // backgroundColor: Colors.blueAccent[1000],
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.blue,Colors.black],
+              begin:Alignment.topCenter ,
+              end: Alignment.bottomCenter,
+            ),
+          ),
+        ),
+      ),
        body: StreamBuilder(
         stream: FirebaseFirestore.instance.collection('Post').snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
