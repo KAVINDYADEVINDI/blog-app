@@ -60,10 +60,10 @@ class _UploadImageState extends State<UploadImage> {
       appBar: AppBar(
         centerTitle: true,
         title:Text(
-            'Home Page',
+            'Add Blog Post',
             style: GoogleFonts.pacifico(
               textStyle: Theme.of(context).textTheme.headline4,
-              fontSize: 28,
+              fontSize: 24,
               color: Colors.white70,
               fontWeight: FontWeight.w500,
               
@@ -104,6 +104,8 @@ class _UploadImageState extends State<UploadImage> {
                   SizedBox(height: 20),            
                   logo(),
                   FloatingActionButton(
+                    backgroundColor: Colors.blue[800],
+                    foregroundColor: Colors.white70,
                     autofocus: true,
                     onPressed: selectFile,
                     tooltip: 'Add Image',
@@ -117,6 +119,7 @@ class _UploadImageState extends State<UploadImage> {
                           hintText: "Enter Description",
                           prefixIcon: Icon(Icons.details),
                         ),
+                        cursorColor: Colors.blue[900],
                         validator: (value){
                           if(value.isEmpty) {
                             return 'This field is required';
@@ -141,12 +144,16 @@ class _UploadImageState extends State<UploadImage> {
                   SizedBox(height: 10),
                   Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                     child:ElevatedButton(
-                    child: Text('Upload Post'),
+                    child: Text('Upload Post',style: TextStyle(fontSize: 16.0),),
                     onPressed: ()=>{
                       validateAndSave(),
                       uploadFile(),
                       
                     },
+                    style: ButtonStyle(
+                      backgroundColor:MaterialStateProperty.all<Color>(Colors.blue[900]),
+                      shadowColor: MaterialStateProperty.all<Color>(Colors.grey[700]),
+                    ),
                     
                     ),),
                   SizedBox(height: 50,width: 100,),
@@ -227,8 +234,10 @@ class _UploadImageState extends State<UploadImage> {
                         return HomePage();
                       }
                     ))
-                  } , 
-                  child: Text("Added Blog Post,See Home page")),
+                  } ,
+                   
+                  child: Text("Added Blog Post,See Home page",style: TextStyle(fontSize: 16.0,color: Colors.blue[900]),softWrap: true,)),
+                  
                   circularStrokeCap: CircularStrokeCap.round,
             );
            

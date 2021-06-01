@@ -20,7 +20,7 @@ class _PostsState extends State<Posts> {
             'Home Page',
             style: GoogleFonts.pacifico(
               textStyle: Theme.of(context).textTheme.headline4,
-              fontSize: 28,
+              fontSize: 24,
               color: Colors.white70,
               fontWeight: FontWeight.w500,
               

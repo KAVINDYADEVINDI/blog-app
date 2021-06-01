@@ -67,7 +67,7 @@ class _SignUpState extends State<SignUp> {
             'Blog App',
             style: GoogleFonts.pacifico(
               textStyle: Theme.of(context).textTheme.headline4,
-              fontSize: 28,
+              fontSize: 24,
               color: Colors.white70,
               fontWeight: FontWeight.w500,
               
@@ -228,7 +228,7 @@ class _SignUpState extends State<SignUp> {
                       ))
                     },
                   child:Text('Already have an account? LogIn',
-                  style: TextStyle(fontSize: 16.0,color: Colors.blue[900]),),
+                  style: TextStyle(fontSize: 16.0,color: Colors.blue[900]),softWrap: true,),
                 ),
               ],
             ),

@@ -31,7 +31,7 @@ class LoginRegPage extends StatelessWidget {
             'Blog App',
             style: GoogleFonts.pacifico(
               textStyle: Theme.of(context).textTheme.headline4,
-              fontSize: 28,
+              fontSize: 24,
               color: Colors.white70,
               fontWeight: FontWeight.w500,
               
@@ -174,7 +174,7 @@ class LoginRegPage extends StatelessWidget {
                       ))
                   },
                   child:Text('Not have an account? Create Account',
-                  style: TextStyle(fontSize: 16.0,color: Colors.blue[900]),),
+                  style: TextStyle(fontSize: 16.0,color: Colors.blue[900]),softWrap: true,),
                 ),
               ],
             ),
