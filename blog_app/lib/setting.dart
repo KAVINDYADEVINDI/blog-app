@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:mailer/mailer.dart';
-import 'package:mailer/smtp_server/mailgun.dart';
-
+import 'package:mailer/smtp_server.dart';
 
 class Setting extends StatefulWidget {
   @override
@@ -18,29 +17,30 @@ class _SettingState extends State<Setting> {
 
   String _subject;
 
-//   main() async {
-//   String username = kavindyadewindi12345678@gmail.com;
-//   String password = kavi1997ucsc;
-//   final smtpServer = gmail(username, password); 
+sendMail() async {
+  String username = '$_email';
+  String password = 'kavi1997ucsc';
 
-//   // Create our email message.
-//   final message = Message()
-//     ..from = Address(username)
-//     ..recipients.add('dest@example.com') //recipent email
-//     ..ccRecipients.addAll(['destCc1@example.com', 'destCc2@example.com']) //cc Recipents emails
-//     ..bccRecipients.add(Address('bccAddress@example.com')) //bcc Recipents emails
-//     ..subject = 'Test Dart Mailer library :: 😀 :: ${DateTime.now()}' //subject of the email
-//     ..text = 'This is the plain text.\nThis is line 2 of the text part.'
-//      //body of the email
+  final smtpServer = gmail(username, password);
+  // Create our message.
+  final message = Message()
+    ..from = Address(username, '$_name')
+    ..recipients.add('kavindyadewindi12345678@gmail.com')
+    ..subject = 'The Blog Post Mobile Application :: 😀 :: ${DateTime.now()}'
+    ..text = '$_subject\n'
+    ..html = "<h1>Test</h1>\n<p>Hey! I wants to connect with you</p>";
 
-//   try {
-//     final sendReport = await send(message, smtpServer);
-//     print('Message sent: ' + sendReport.toString()); //print if the email is sent
-//   } on MailerException catch (e) {
-//     print('Message not sent. \n'+ e.toString()); //print if the email is not sent
-//     // e.toString() will show why the email is not sending
-//   }
-// } 
+  try {
+    final sendReport = await send(message, smtpServer);
+    print('Message sent: ' + sendReport.toString());
+  } on MailerException catch (e) {
+    print('Message not sent.');
+    for (var p in e.problems) {
+      print('Problem: ${p.code}: ${p.msg}');
+    }
+  }
+  // DONE
+}
   
   
   bool validate(){
@@ -85,7 +85,7 @@ class _SettingState extends State<Setting> {
                   ),
                   Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                       child:Text("WANT TO GET IN TOUCH!",
-                      style: TextStyle(fontSize: 14.0,fontWeight: FontWeight.w400,color: Colors.black54),),
+                      style: TextStyle(fontSize: 14.0,fontWeight: FontWeight.w800,color: Colors.black87),),
                   ),
                   SizedBox(height: 10),
                   Padding(padding:EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
@@ -174,7 +174,8 @@ class _SettingState extends State<Setting> {
                       child:ElevatedButton(
                       child: Text('Send message'),
                       onPressed: ()=>{ 
-                        validate()  
+                        validate(),
+                        sendMail()  
                       },
                     ),
                   ),
