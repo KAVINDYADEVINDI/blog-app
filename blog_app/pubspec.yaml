@@ -43,8 +43,12 @@ dependencies:
   mailer: ^5.0.0
   sms: ^0.2.4
   google_fonts: ^2.1.0
+  flutter_launcher_icons: ^0.9.0
   
-  
+flutter_icons:
+  image_path: "assets/icon.jpg"
+  android: true
+  ios: true
   
  
 
